@@ -29,7 +29,7 @@ An earlier audit build at [`0xd57aeEe92923e591Dfb026211c5d600528F8aB6D`](https:/
 
 ## Additional Bradbury boundary and adversarial tests
 
-The following are **real write transactions** against the same submission contract, not local simulations. As of the latest 14 October 2026 check, all nine were `ACCEPTED`, **not yet `FINALIZED`**. Their observed verdict/error came from execution receipts or traces; acceptance alone does not mean execution succeeded.
+The following are **real write transactions** against the same submission contract, not local simulations. A follow-up Bradbury RPC check confirmed that all nine are `FINALIZED`. Their observed verdict/error came from execution receipts or traces; finality alone does not mean execution succeeded. The final receipts retained the expected successful-return or error execution outcomes.
 
 | Case | Transaction | Observed execution |
 | --- | --- | --- |
@@ -47,7 +47,7 @@ The negative rows above are expected `FINISHED_WITH_ERROR` receipts, **not** suc
 
 ## Finality and reproducibility
 
-On 14 October 2026, an independent Bradbury RPC read confirmed that the deployment, four initial successful comparison transactions, and initial expected rejection transaction were all `FINALIZED` (status 7). The nine additional transactions above were still `ACCEPTED` (status 5) at their last check. Finality is distinct from execution success: negative tests remain `FINISHED_WITH_ERROR` by design. Recheck their status before citing them as finalized. See [GenLayer's finality documentation](https://docs.genlayer.com/understand-genlayer-protocol/core-concepts/optimistic-democracy/finality) for the protocol's finality process.
+An independent Bradbury RPC read confirmed that the deployment and all fourteen test transactions are `FINALIZED` (status 7). Five initial tests and nine additional tests are listed above. Finality is distinct from execution success: the invalid-input and wrong-type tests remain `FINISHED_WITH_ERROR` by design. See [GenLayer's finality documentation](https://docs.genlayer.com/understand-genlayer-protocol/core-concepts/optimistic-democracy/finality) for the protocol's finality process.
 
 The CLI v0.39.2 `estimate-fees` command failed against its bundled SDK with `client.estimateTransactionFees is not a function`; actual deployment and writes succeeded without a custom fee preset. This is a tooling caveat, not a finding about MeaningSeal. The CLI's selected network is global state and can be changed by another session, so verify `genlayer network info` before each write, even when passing `--rpc`.
 
