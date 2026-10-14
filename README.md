@@ -42,6 +42,8 @@ genlayer deploy --contract contracts/meaning_seal.py --rpc https://rpc-bradbury.
 
 Use an unlocked, funded account and record the resulting transaction hash and address. Do not put keystores, private keys, or `.env` files in this repository. See [`DEPLOYMENT.md`](DEPLOYMENT.md) for the verified deployment and readback evidence.
 
+For calls containing only digits, use a typed SDK client that sends both arguments as strings. The CLI infers a bare numeric argument as an integer even when shell-quoted, so such a call is rejected with `ORIGINAL_TYPE` or `REVISION_TYPE`. Always inspect both the consensus status and execution result: a finalized or accepted transaction can still contain an expected user error.
+
 ## How to interpret the result
 
 `EQUIVALENT` means the validators classified the claims as materially the same; `MATERIAL_CHANGE` means they classified a material difference; `UNCERTAIN` means ambiguity or missing context prevented a reliable decision. A write transaction can also fail or remain unfinalized. Only treat a finalized successful receipt as a recorded result. The receipt and transaction calldata are the audit trail; the contract intentionally provides no on-chain history lookup.

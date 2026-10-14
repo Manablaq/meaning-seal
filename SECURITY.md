@@ -12,6 +12,7 @@ These controls are not a guarantee of safety. Known limitations:
 6. **Constrained task:** Only single-line 8–512-character statements are supported. The contract does not verify truth, provenance, legal equivalence, intent, document structure, or off-chain evidence.
 7. **Network/version coupling:** The pinned `py-genlayer` runner and stable SDK are for the current Bradbury deployment environment. A future runtime or fee-policy change may require a new deployment.
 8. **No formal proof or independent audit:** Unit tests, schema validation, and testnet checks cannot establish an absence of all weaknesses.
+9. **Client argument types:** The CLI auto-converts digit-only arguments to integers. Use a typed SDK call for numeric-only statements, and verify the execution result rather than treating an accepted receipt as a successful comparison.
 
 Do not use this contract alone for financial, legal, safety-critical, or identity decisions. Verify any disputed result with people and source documents.
 

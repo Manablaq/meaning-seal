@@ -27,6 +27,19 @@ def test_exact_match_needs_no_model(direct_vm, direct_deploy):
     assert len(direct_vm._captured_validators) == 0
 
 
+@pytest.mark.parametrize("text", ["abcdefgh", "a" * 512, "Pago vence mañana."])
+def test_exact_match_accepts_boundaries_and_printable_unicode(direct_vm, direct_deploy, text):
+    contract = deploy(direct_vm, direct_deploy)
+    assert contract.compare(text, text) == "EQUIVALENT"
+    assert len(direct_vm._captured_validators) == 0
+
+
+def test_rejects_numeric_argument_type(direct_vm, direct_deploy):
+    contract = deploy(direct_vm, direct_deploy)
+    with direct_vm.expect_revert("ORIGINAL_TYPE"):
+        contract.compare(12345678, "abcdefgh")
+
+
 @pytest.mark.parametrize(
     "verdict",
     ["EQUIVALENT", "MATERIAL_CHANGE", "UNCERTAIN"],
@@ -59,6 +72,8 @@ def test_validator_rejects_disagreement_and_invalid_leader(direct_vm, direct_dep
     "payload,error",
     [
         ({"verdict": "ALLOW"}, "MODEL_VERDICT"),
+        ({"verdict": None}, "MODEL_VERDICT"),
+        ({"verdict": []}, "MODEL_VERDICT"),
         ({"verdict": "EQUIVALENT", "reason": "extra"}, "MODEL_KEYS"),
         (["EQUIVALENT"], "MODEL_NOT_OBJECT"),
     ],
@@ -74,6 +89,7 @@ def test_rejects_untrusted_model_output(direct_vm, direct_deploy, payload, error
 @pytest.mark.parametrize(
     "original,revision,error",
     [
+        ("abcdefg", REVISION, "ORIGINAL_SIZE"),
         ("short", REVISION, "ORIGINAL_SIZE"),
         ("x" * 513, REVISION, "ORIGINAL_SIZE"),
         (ORIGINAL, "x" * 513, "REVISION_SIZE"),
