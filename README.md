@@ -20,7 +20,7 @@ The source is [`contracts/meaning_seal.py`](contracts/meaning_seal.py). The `Dep
 
 1. Open the [public contract source](contracts/meaning_seal.py), the [Bradbury contract](https://explorer-bradbury.genlayer.com/address/0x294040337A9E2c5A89f7Fd53ADEc028F5eeCCd54), and its [finalized deployment transaction](https://explorer-bradbury.genlayer.com/tx/0x831edb41467cfc0a000c4e7672c8f30fee1d5c3052d1056a6c6ad54a762cd4c9). The deployed source hash is recorded in [`DEPLOYMENT.md`](DEPLOYMENT.md).
 2. Inspect finalized comparison examples: [material change](https://explorer-bradbury.genlayer.com/tx/0x31c9b157c70303be8d85e1fd7a593ed059895c349c49b305e1df15407a9b17a5), [equivalent paraphrase](https://explorer-bradbury.genlayer.com/tx/0xb7adea14d3a686f08bb61f0ed194dd1fb541c8205cbc7fadc706f6828935a77a), and [uncertain wording](https://explorer-bradbury.genlayer.com/tx/0x8e7a88dda71e26ff67de350ad29bd99e338f07b97edd983c19c5ef74c43c3763). Check both `FINALIZED` and `FINISHED_WITH_RETURN`; a finalized error is not a verdict.
-3. Reproduce the [27 direct-mode tests](tests/test_meaning_seal_direct.py) using the command below, or inspect the [passing CI run](https://github.com/Manablaq/meaning-seal/actions/runs/38567077337).
+3. Reproduce the [27 direct-mode tests](tests/test_meaning_seal_direct.py) using the command below, or inspect the [passing CI run](https://github.com/Manablaq/meaning-seal/actions/runs/38568340625).
 
 The [submission summary](SUBMISSION.md) collects the exact links and a short, evidence-backed description for the GenLayer Portal's **Intelligent Contract** category.
 
