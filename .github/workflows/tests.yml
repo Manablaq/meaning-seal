@@ -1,0 +1,21 @@
+name: Contract tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  direct-mode:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install stable GenLayer test runner
+        run: python -m pip install -r requirements-dev.txt
+      - name: Run direct-mode tests
+        env:
+          GENVM_VERSION: v0.3.0-rc4
+        run: python -m pytest tests/ -q
