@@ -12,7 +12,9 @@ REVISION = "Payment for the invoice is due by October 31, 2026."
 def deploy(direct_vm, direct_deploy):
     direct_vm.strict_mocks = True
     direct_vm.check_pickling = True
-    return direct_deploy(str(CONTRACT))
+    # genlayer-test 0.29.2 only downloads the pre-0.3 universal asset name.
+    # v0.2.16 contains the pinned Bradbury runner and is available in CI.
+    return direct_deploy(str(CONTRACT), sdk_version="v0.2.16")
 
 
 def model_json(payload):
@@ -80,6 +82,9 @@ def test_rejects_untrusted_model_output(direct_vm, direct_deploy, payload, error
         (ORIGINAL + "\n", REVISION, "ORIGINAL_WHITESPACE"),
         (ORIGINAL, "Invoice\tamount is fixed.", "REVISION_CONTROL"),
         (ORIGINAL, "Invoice\x00amount is fixed.", "REVISION_CONTROL"),
+        (ORIGINAL, "Invoice\u0085amount is fixed.", "REVISION_CONTROL"),
+        (ORIGINAL, "Invoice\u2028amount is fixed.", "REVISION_CONTROL"),
+        (ORIGINAL, "Invoice\u202eamount is fixed.", "REVISION_CONTROL"),
     ],
 )
 def test_rejects_invalid_input(direct_vm, direct_deploy, original, revision, error):

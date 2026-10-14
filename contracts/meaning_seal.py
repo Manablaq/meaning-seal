@@ -32,7 +32,7 @@ class MeaningSeal(gl.Contract):
         if value != value.strip():
             raise gl.vm.UserError(f"{label}_WHITESPACE")
         for character in value:
-            if ord(character) < 32 or ord(character) == 127:
+            if not character.isprintable():
                 raise gl.vm.UserError(f"{label}_CONTROL")
 
     @gl.public.write

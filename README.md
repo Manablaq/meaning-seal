@@ -4,13 +4,15 @@ MeaningSeal is a standalone GenLayer intelligent contract for bounded, one-shot 
 
 This design avoids the Studio Next read-call issue encountered in the earlier project: there is no contract getter to call, and the deployment target is **Bradbury (chain ID 4221)**, not Studio Next. It does **not** guarantee immunity from Bradbury RPC outages, model failures, validator disagreement, or future protocol changes.
 
+Submission deployment: [`0x294040337A9E2c5A89f7Fd53ADEc028F5eeCCd54`](https://explorer-bradbury.genlayer.com/address/0x294040337A9E2c5A89f7Fd53ADEc028F5eeCCd54). The full transaction and test evidence is in [`DEPLOYMENT.md`](DEPLOYMENT.md). An earlier address was superseded and must not be used.
+
 ## Contract interface
 
 | Method | Kind | Inputs | Result |
 | --- | --- | --- | --- |
 | `compare` | write transaction | `original: str`, `revision: str` | one of the three verdict strings |
 
-The constructor has no arguments. Inputs must each be 8–512 Unicode code points, a single line, with no leading/trailing whitespace or ASCII control characters. Both inputs are public transaction data; do not submit secrets or personal information. A verdict is an AI-assisted comparison, **not** proof that a statement is true, legally equivalent, or safe to rely on.
+The constructor has no arguments. Inputs must each be 8–512 Unicode code points, a single line, with no leading/trailing whitespace or non-printing control/format characters. Both inputs are public transaction data; do not submit secrets or personal information. A verdict is an AI-assisted comparison, **not** proof that a statement is true, legally equivalent, or safe to rely on.
 
 The source is [`contracts/meaning_seal.py`](contracts/meaning_seal.py). The `Depends` header pins the Bradbury-compatible `py-genlayer` runner. There is no upgrade path or admin role.
 
